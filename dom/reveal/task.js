@@ -1,8 +1,8 @@
 const reveal = document.querySelectorAll('.reveal');
-reveal.forEach(rev => {
-    setInterval( () => {
-        if (rev.getBoundingClientRect().top <= 500) {
-            rev.classList.add('reveal_active')
-        }
-    }, 500);    
+    document.addEventListener('scroll', () => {
+        reveal.forEach(elem => {
+            if (elem.getBoundingClientRect().top < window.innerHeight - 50) {
+                elem.classList.add('reveal_active')
+            }
+        })
 })
