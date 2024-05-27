@@ -5,13 +5,11 @@ values.addEventListener('click', () => {
 })
 const items = document.querySelectorAll(".dropdown__item")
 
-items.forEach((item) => {
-    item.addEventListener('click', (event) => event.preventDefault())
-})
 
 items.forEach((item) => {
-    item.addEventListener('click', () => {
+    item.addEventListener('click', (e) => {
+        e.preventDefault()
         values.textContent = item.textContent
         valuesList.classList.remove("dropdown__list_active");
     })
-})
+}) 

@@ -4,6 +4,7 @@ class Game {
     this.wordElement = container.querySelector('.word');
     this.winsElement = container.querySelector('.status__wins');
     this.lossElement = container.querySelector('.status__loss');
+    this.timerElement = container.querySelector('#timer');
 
     this.reset();
 
@@ -14,28 +15,36 @@ class Game {
     this.setNewWord();
     this.winsElement.textContent = 0;
     this.lossElement.textContent = 0;
+    // this.timerElement.textContent = '00:00:00'
   }
 
   registerEvents() {
-    let freeze = false
-    
-    document.addEventListener('keyup', () => {
-      freeze = false
-    })
-
     document.addEventListener('keydown', (e) => {
-      if (freeze) {
-        return
-      }
-      if (e.key.toLowerCase() === this.currentSymbol.textContent.toLowerCase()) {
-        freeze = true
-        this.success()
-      } else { 
-        freeze = true
-        this.fail()
+      if (!e.repeat) {
+        if (e.key.toLowerCase() === this.currentSymbol.textContent.toLowerCase()) {
+          this.success();
+        } else {
+          this.fail();
+        }
       }
     })
-    
+  }
+
+  gameTimer(word) {
+    const timer = document.getElementById('timer')
+    let [hour, minute, second] = timer.textContent.split(":");
+    second = word.length;
+    timer.textContent = `${hour}:${minute}:${second < 10 ? "0" + second : second}`
+    this.test = setInterval(() => {
+        if (+second > 0) {
+          second -= 1
+        } else {
+          clearInterval(this.test)
+          this.fail()
+          second = 0;
+        }
+        timer.textContent = `${hour}:${minute}:${second < 10 ? "0" + second : second}`
+      }, 1000)
   }
 
   success() {
@@ -65,8 +74,9 @@ class Game {
 
   setNewWord() {
     const word = this.getWord();
-
+    clearInterval(this.test)
     this.renderWord(word);
+    this.gameTimer(word)
   }
 
   getWord() {
