@@ -1,16 +1,11 @@
-let valuesList = document.querySelector(" .dropdown__list")
-let values = document.querySelector(".dropdown__value")
+const valuesList = document.querySelector(" .dropdown__list")
+const values = document.querySelector(".dropdown__value")
 values.addEventListener('click', () => {
-    valuesList.classList.add("dropdown__list_active");
+    valuesList.classList.toggle("dropdown__list_active");
 })
-let items = document.querySelectorAll(".dropdown__item")
-let itemLink = document.querySelectorAll('.dropdown__link') 
+const items = document.querySelectorAll(".dropdown__item")
 
-function test(){
-    return false
-}
-itemLink.forEach((item) => {
-    // item.onclick = () => {return false}
+items.forEach((item) => {
     item.addEventListener('click', (event) => event.preventDefault())
 })
 
