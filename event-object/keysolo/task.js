@@ -18,6 +18,11 @@ class Game {
 
   registerEvents() {
     let freeze = false
+    
+    document.addEventListener('keyup', () => {
+      freeze = false
+    })
+
     document.addEventListener('keydown', (e) => {
       if (freeze) {
         return
@@ -30,9 +35,7 @@ class Game {
         this.fail()
       }
     })
-    document.addEventListener('keyup', () => {
-      freeze = false
-    })
+    
   }
 
   success() {

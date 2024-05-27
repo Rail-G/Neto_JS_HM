@@ -1,5 +1,5 @@
-let tabs = document.querySelectorAll(".tab");
-let tabContent = document.querySelectorAll(".tab__content")
+const tabs = document.querySelectorAll(".tab");
+const tabContent = document.querySelectorAll(".tab__content")
 
 tabs.forEach((item, index) => {
     item.addEventListener('click', () => {
