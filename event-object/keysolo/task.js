@@ -31,10 +31,9 @@ class Game {
   }
 
   gameTimer(word) {
-    const timer = document.getElementById('timer')
-    let [hour, minute, second] = timer.textContent.split(":");
+    let second = 0;
     second = word.length;
-    timer.textContent = `${hour}:${minute}:${second < 10 ? "0" + second : second}`
+    timer.textContent = `00:00:${("0" + second).slice(-2)}`
     this.test = setInterval(() => {
         if (+second > 0) {
           second -= 1
@@ -43,7 +42,7 @@ class Game {
           this.fail()
           second = 0;
         }
-        timer.textContent = `${hour}:${minute}:${second < 10 ? "0" + second : second}`
+        timer.textContent = `00:00:${("0" + second).slice(-2)}`
       }, 1000)
   }
 
