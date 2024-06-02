@@ -95,33 +95,12 @@ products.forEach(elem => {
                 }
             })
 
-            // let newIndex = 0;
-            // while (localStorage.getItem(`item${newIndex}`) !== null) {
-            //     newIndex++;
-            // }
-
-            // basket.setAttribute('data-index', newIndex);
-            // localStorage.setItem(`item${producId}`, basket.innerHTML)
-
-
-            // ---/ Попытка делать анимацию. Неудачно /---
-
-            // const {top, left} = image.getBoundingClientRect()
-            // const clone = image.cloneNode(true);
-            // clone.style.top = top + 'px';
-            // clone.style.left = left + 'px'
-            // clone.classList.add('animation');
-            // document.body.appendChild(clone);
-            // basketBtn.onclick = () => {
-            //     clone.style.left = 450 + 'px';
-            // }
         }
         document.querySelectorAll('.cart__product').forEach(elem => {
             if (elem.getAttribute('data-id') == producId) {
                 localStorage.setItem(`item${producId}`, elem.innerHTML)
             }
         })
-        // localStorage.setItem(`item${producId}`, basket.innerHTML)
         
         if (document.querySelectorAll('.cart__product').length > 0) {
             document.querySelector('.cart').classList.remove('cart__active')
