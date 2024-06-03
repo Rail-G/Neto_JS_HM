@@ -29,11 +29,13 @@ products.forEach(elem => {
     const producId = elem.getAttribute('data-id');
     const control = elem.querySelector('.product__quantity-controls');
     const amount = control.querySelector('.product__quantity-value');
+    const increment = control.querySelector('.product__quantity-control_inc');
+    const decrement = control.querySelector('.product__quantity-control_dec');
     elem.addEventListener('click', (e) => {
-        const increment = control.querySelector('.product__quantity-control_inc');
-        const decrement = control.querySelector('.product__quantity-control_dec');
+        // const increment = control.querySelector('.product__quantity-control_inc');
+        // const decrement = control.querySelector('.product__quantity-control_dec');
         increment.onclick = () => {++amount.textContent};
-        decrement.onclick = () => {--amount.textContent};
+        decrement.onclick = () => {--amount.textContent < 0};
     })
 
     const basketBtn = elem.querySelector('.product__add');
@@ -57,10 +59,9 @@ products.forEach(elem => {
             }
 
         if (+amount.textContent < 0 && exist) {
-            alert('Товар с минусовым значением означает, что это ВЫ должны нам этот товар (-_ -)/*\\(- _-)')
+            amount.textContent = 0;
             exist = false
         } else if ((amount.textContent == 0 && exist) ){
-            alert('Серьезно? \\_(-__ -)_/')
             exist = false
         }
 
