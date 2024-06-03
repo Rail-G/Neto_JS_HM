@@ -30,6 +30,7 @@ body {
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
+  position: relative;
 }
 .product__title {
   width: 100%;
@@ -106,4 +107,12 @@ body {
 
 .cart__active {
   display: none;
+}
+
+.photo {
+  position: absolute;
+  top: 50px;
+  left: 0;
+  transition: left 1s, top 1s;
+  
 }

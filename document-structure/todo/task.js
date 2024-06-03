@@ -1,26 +1,30 @@
 const inputForm = document.getElementById('task__input');
 const form = document.getElementById('tasks__form');
 const taskList = document.getElementById('tasks__list')
-let count = 0;
 
-for (let index = 0; index < (localStorage.length + count); index++) {
-    if (localStorage.getItem(`item${index}`) !== null) {
-        taskList.insertAdjacentHTML('afterbegin', `<div class="task" data-index=${index}>${localStorage.getItem(`item${index}`)}</div>`);
-    } else {
-        ++count;
-    }
+
+for (let index = 0; index < (localStorage.getItem('length')); index++) {
+    if (localStorage.getItem(`todo${index}`) !== null) {
+        if (localStorage.getItem(`todo${index}`) !== null) {
+            taskList.insertAdjacentHTML('afterbegin', `<div class="task" data-index=${index}><div class="task__title">${localStorage.getItem(`todo${index}`)}</div><a class="task__remove">×</a></div>`);
+        } 
+    } 
 }
-
 
 taskList.addEventListener('click', (e) => {
     const taske = e.target.closest('.task');
     const id = taske.getAttribute('data-index');
-    localStorage.removeItem(`item${id}`)
+    localStorage.removeItem(`todo${id}`)
     taske.remove();
 })
 
 form.addEventListener('submit', (e) => {
     e.preventDefault()
+
+    if (inputForm.value.trim() == '') {
+        alert('Пустое значение не добавлю')
+        return
+    }
     const task = document.createElement('div');
     const taskTitle = document.createElement('div');
     const taskCloseBtn = document.createElement('a');
@@ -37,13 +41,15 @@ form.addEventListener('submit', (e) => {
     taskList.insertAdjacentElement('afterbegin', task);
 
     let newIndex = 0;
-    while (localStorage.getItem(`item${newIndex}`) !== null) {
+    while (localStorage.getItem(`todo${newIndex}`) !== null) {
         newIndex++;
     }
 
     task.setAttribute('data-index', newIndex);
-    localStorage.setItem(`item${newIndex}`, task.innerHTML)
+    localStorage.setItem(`todo${newIndex}`, inputForm.value)
+    localStorage.setItem('length', localStorage.length)
 
     inputForm.value = '';
 
 })
+

@@ -4,6 +4,10 @@ const tool = document.querySelector('.tooltip')
 link.forEach(elem => {
     elem.addEventListener('click', (e) => {
         e.preventDefault();
+        if (tool.textContent === elem.title) {
+            tool.classList.toggle('tooltip_active')
+            return
+        }
         tool.textContent = elem.title;
         const posit = elem.getBoundingClientRect();
         tool.style.top = (posit.top + posit.height) + 'px';
@@ -11,6 +15,6 @@ link.forEach(elem => {
         document.addEventListener('scroll', () => {
             tool.style.top = (elem.getBoundingClientRect().top + posit.height) + 'px';
         })
-        tool.classList.toggle('tooltip_active')
+        tool.classList.add('tooltip_active')
     })
 })

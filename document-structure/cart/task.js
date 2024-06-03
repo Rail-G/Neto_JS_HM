@@ -2,14 +2,11 @@ const basketAmount = document.querySelector('.cart__products')
 
 const products = document.querySelectorAll('.product')
 
-let count = 0;
-
-for (let index = 0; index < (localStorage.length + count); index++) {
+for (let index = 0; index < (localStorage.getItem('length')); index++) {
     if (localStorage.getItem(`item${index}`) !== null) {
-        basketAmount.insertAdjacentHTML('afterbegin', `<div class="cart__product" data-id=${index}>${localStorage.getItem(`item${index}`)}</div>`);
+        const {img, amount} = JSON.parse(localStorage.getItem(`item${index}`))
+        basketAmount.insertAdjacentHTML('afterbegin', `<div class="cart__product" data-id=${index}><img class="cart__product-image" src=${img}><a class="close-btn">X</a><div class="cart__product-count">${amount}</div></div>`);
         document.querySelector('.cart').classList.remove('cart__active')
-    } else {
-        ++count;
     }
 }
 
@@ -20,6 +17,7 @@ if (document.querySelector('.close-btn') != null) {
         const id = taske.getAttribute('data-id');
         localStorage.removeItem(`item${id}`)
         taske.remove();
+        localStorage.setItem('length', localStorage.length)
         if (document.querySelectorAll('.cart__product').length < 1) {
             document.querySelector('.cart').classList.add('cart__active')
         }
@@ -39,25 +37,24 @@ products.forEach(elem => {
     })
 
     const basketBtn = elem.querySelector('.product__add');
-    const image = elem.querySelector('.product__image')
+    const image = elem.querySelector('.product__image');
     basketBtn.addEventListener('click', (e) => {
         let exist = true
         let testt = 0;
-        document.querySelectorAll('.cart__product').forEach(elem => {
-            if (elem.getAttribute('data-id') == producId) {
-                testt = Number(elem.querySelector('.cart__product-count').textContent) + Number(amount.textContent)
+        const CPItem = Array.from(document.querySelectorAll('.cart__product')).find(ele => ele.getAttribute('data-id') === producId)
+            if (CPItem) {
+                testt = Number(CPItem.querySelector('.cart__product-count').textContent) + Number(amount.textContent)
                 if (testt == 0) {
-                    elem.remove()
+                    CPItem.remove()
                     localStorage.removeItem(`item${producId}`)
                 }  else if (testt < 0) {
                     alert('У вас одно яблоко, сможете отдать три? Вот и я думаю, что нет.')
                     exist = false
                     return
                 }
-                elem.querySelector('.cart__product-count').textContent = testt
+                CPItem.querySelector('.cart__product-count').textContent = testt
                 exist = false
             }
-        })
 
         if (+amount.textContent < 0 && exist) {
             alert('Товар с минусовым значением означает, что это ВЫ должны нам этот товар (-_ -)/*\\(- _-)')
@@ -96,11 +93,28 @@ products.forEach(elem => {
             })
 
         }
-        document.querySelectorAll('.cart__product').forEach(elem => {
-            if (elem.getAttribute('data-id') == producId) {
-                localStorage.setItem(`item${producId}`, elem.innerHTML)
-            }
-        })
+        // ---/ Попытка сделай анимацию /---
+        
+        // const clone = image.cloneNode(true)
+        // clone.classList.add('photo')
+        // image.insertAdjacentElement("afterend", clone)
+        // function movePhoto() {
+        //     const newPositionTop = (-document.querySelector('.cart__product-image').getBoundingClientRect().top + 35) +  'px';
+        //     const newPositionLeft = document.querySelector('.cart__product-image').getBoundingClientRect().left + 'px';
+        //     console.log(newPositionTop, clone.getBoundingClientRect().top)
+        //     console.log(newPositionLeft, clone.getBoundingClientRect().left)
+        
+        //     clone.style.top = newPositionTop;
+        //     clone.style.left = newPositionLeft;
+        // }
+        
+        // movePhoto()
+
+        const te = Array.from(document.querySelectorAll('.cart__product')).find(elem => elem.getAttribute('data-id') === producId)
+        if (te) {
+            localStorage.setItem(`item${producId}`, JSON.stringify({img: te.querySelector('img').src, amount: te.querySelector('.cart__product-count').textContent}))
+            localStorage.setItem('length', localStorage.length)
+        }
         
         if (document.querySelectorAll('.cart__product').length > 0) {
             document.querySelector('.cart').classList.remove('cart__active')
