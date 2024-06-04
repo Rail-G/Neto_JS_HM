@@ -2,19 +2,27 @@ const inputForm = document.getElementById('task__input');
 const form = document.getElementById('tasks__form');
 const taskList = document.getElementById('tasks__list')
 
+let todoItem = JSON.parse(localStorage.getItem('todoItem'))
+if (Object.is(todoItem, null)) {
+    todoItem = {}
+}
 
-for (let index = 0; index < (localStorage.getItem('length')); index++) {
-    if (localStorage.getItem(`todo${index}`) !== null) {
-        if (localStorage.getItem(`todo${index}`) !== null) {
-            taskList.insertAdjacentHTML('afterbegin', `<div class="task" data-index=${index}><div class="task__title">${localStorage.getItem(`todo${index}`)}</div><a class="task__remove">×</a></div>`);
-        } 
-    } 
+for (let index = 0; index < (todoItem.length); index++) {
+    taskList.insertAdjacentHTML('afterbegin', `<div class="task" data-index=${index}><div class="task__title">${todoItem[index]}</div><a class="task__remove">×</a></div>`);
 }
 
 taskList.addEventListener('click', (e) => {
-    const taske = e.target.closest('.task');
-    const id = taske.getAttribute('data-index');
-    localStorage.removeItem(`todo${id}`)
+    const taske = e.target.closest('.task')
+    const taskTitle = taske.querySelector('.task__title');
+    const text = taskTitle.textContent;
+    let items = JSON.parse(localStorage.getItem('todoItem'));
+    const existingItemIndex = items.indexOf(text);
+    console.log(items.indexOf(text))
+    if (existingItemIndex !== -1) {
+        items.splice(existingItemIndex, 1);
+        console.log(items)
+    }
+    localStorage.setItem(`todoItem`, JSON.stringify(items))
     taske.remove();
 })
 
@@ -40,16 +48,13 @@ form.addEventListener('submit', (e) => {
     task.appendChild(taskCloseBtn);
     taskList.insertAdjacentElement('afterbegin', task);
 
-    let newIndex = 0;
-    while (localStorage.getItem(`todo${newIndex}`) !== null) {
-        newIndex++;
-    }
+    let todoItems = JSON.parse(localStorage.getItem('todoItem')) || [];
+    todoItems.push(inputForm.value);
+    localStorage.setItem(`todoItem`, JSON.stringify(todoItems));
 
-    task.setAttribute('data-index', newIndex);
-    localStorage.setItem(`todo${newIndex}`, inputForm.value)
-    localStorage.setItem('length', localStorage.length)
 
     inputForm.value = '';
 
 })
+
 

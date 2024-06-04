@@ -18,3 +18,4 @@ link.forEach(elem => {
         tool.classList.add('tooltip_active')
     })
 })
+
