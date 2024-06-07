@@ -1,0 +1,47 @@
+body {
+  font-family: Arial;
+}
+.item {
+  display: flex;
+}
+
+.item__code {
+  margin-right: 5px;
+  font-weight: bold;
+}
+.item__value {
+  margin-right: 5px;
+}
+
+.loader {
+  width: 100px;
+  display: none;
+  position: absolute;
+  top: 60px;
+}
+
+.loader_active {
+  display: block;
+}
+
+.items {
+  opacity: 1;
+  width: 200px;
+}
+
+.items_active {
+  opacity: 0.4;
+  background-color: lightgray;
+}
+
+.card {
+  position: relative;
+}
+
+.stonks {
+  background-color: rgba(0, 255, 0, 0.3);
+}
+
+.notStonks {
+  background-color: rgba(255, 0, 0, 0.3);
+}
