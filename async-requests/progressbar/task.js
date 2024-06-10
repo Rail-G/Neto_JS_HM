@@ -1,7 +1,3 @@
-// const xhr = new XMLHttpRequest()
-// xhr.open('POST', 'https://students.netoservices.ru/nestjs-backend/upload')
-// xhr.responseType = 'json';
-// xhr.send()
 
 document.querySelector('form').addEventListener('submit', (e) => {
     e.preventDefault()
