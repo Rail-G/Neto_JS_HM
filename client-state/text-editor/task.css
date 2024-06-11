@@ -16,11 +16,3 @@ textarea {
   border-radius: 50px;
   cursor: pointer;
 }
-
-#safe {
-  color: white;
-  background-color: green;
-  border: 0;
-  border-radius: 50px;
-  cursor: pointer;
-}

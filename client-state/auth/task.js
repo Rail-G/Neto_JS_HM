@@ -10,10 +10,20 @@ function getUser(data) {
     const user = localStorage.getItem('user_id');
     if (!user) {
         createUser(data)
-    } 
+    }
     welcome.querySelector('#user_id').textContent = data
+    document.getElementById('signin').classList.remove('signin_active')
     welcome.classList.add('welcome_active')
 }
+
+function getLoginedUser() {
+    const loginedUser = localStorage.getItem('user_id')
+    if (loginedUser) {
+        getUser(loginedUser)
+    }
+}
+
+getLoginedUser()
 
 form.addEventListener('submit', (e) => {
     e.preventDefault()
@@ -21,9 +31,7 @@ form.addEventListener('submit', (e) => {
     xhr.open('POST', 'https://students.netoservices.ru/nestjs-backend/auth')
     xhr.responseType = 'json'
     xhr.send(formData)
-    form.querySelectorAll('input').forEach(elem => {
-        elem.value = ''
-    })
+    form.reset()
 })
 
 xhr.addEventListener('load', () => {
